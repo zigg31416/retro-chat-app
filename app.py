@@ -74,4 +74,32 @@ def home_page():
             <div style="background-color: rgba(0, 0, 0, 0.7); border: 3px solid #ff00c1; padding: 30px; margin: 20px 0; box-shadow: 0 0 15px #ff00c1;">
                 <h2 style="font-family: 'Press Start 2P', cursive; color: #00fff9; text-align: center; margin-bottom: 30px; text-shadow: 0 0 10px #00fff9;">CHOOSE YOUR PATH</h2>
             </div>
+            """, 
+            unsafe_allow_html=True
+        )
+        
+        col_a, col_b = st.columns(2)
+        
+        with col_a:
+            if st.button("HOST CHATROOM", key="host_btn"):
+                st.session_state.page = "host"
+                st.experimental_rerun()
+        
+        with col_b:
+            if st.button("JOIN CHATROOM", key="join_btn"):
+                st.session_state.page = "join"
+                st.experimental_rerun()
+        
+        # Credits
+        st.markdown(
             """
+            <div style="text-align: center; margin-top: 50px; font-family: 'VT323', monospace; font-size: 0.8rem; color: rgba(255,255,255,0.6);">
+                Built with Streamlit and Supabase
+            </div>
+            """, 
+            unsafe_allow_html=True
+        )
+
+# Run the main application
+if __name__ == "__main__":
+    main()
