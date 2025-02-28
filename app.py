@@ -1,8 +1,4 @@
 import streamlit as st
-from components.host import host_chatroom
-from components.join import join_chatroom, waiting_room
-from components.chat import chat_interface
-from utils.ui_elements import inject_custom_css, add_glitch_effect, create_retro_footer
 
 # Set page config
 st.set_page_config(
@@ -12,94 +8,60 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Inject custom CSS
-inject_custom_css()
+# Add basic styling
+st.markdown("""
+<style>
+body {
+    background-color: #120458;
+    color: #ffffff;
+    font-family: monospace;
+}
+h1 {
+    color: #ff00c1;
+    text-shadow: 0 0 5px #ff00c1, 0 0 10px #ff00c1;
+    font-size: 3rem;
+    text-align: center;
+}
+.btn {
+    background-color: black;
+    color: #00fff9;
+    border: 3px solid #00fff9;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    box-shadow: 0 0 5px #00fff9;
+}
+</style>
+""", unsafe_allow_html=True)
 
-# Add retro effects
-add_glitch_effect()
-create_retro_footer()
+# Title
+st.markdown("<h1>RETRO CHAT</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #00fff9; font-size: 1.5rem;'>A BLAST FROM THE PAST</p>", unsafe_allow_html=True)
 
-# Initialize session state
-if "page" not in st.session_state:
-    st.session_state.page = "home"
+# Description
+st.markdown("<p style='text-align: center; color: #adff2f; font-size: 1.2rem;'>Create or join a retro-styled temporary chatroom with your friends.<br>No accounts, no history, just pure nostalgic vibes.</p>", unsafe_allow_html=True)
 
-# Main application
-def main():
-    # Handle different pages
-    if st.session_state.page == "home":
-        home_page()
-    elif st.session_state.page == "host":
-        host_chatroom()
-    elif st.session_state.page == "join":
-        join_chatroom()
-    elif st.session_state.page == "waiting":
-        waiting_room()
-    elif st.session_state.page == "chat":
-        chat_interface()
+# Options
+col1, col2, col3 = st.columns([1, 2, 1])
 
-def home_page():
-    """Home page with options to host or join"""
-    # Title
-    st.markdown(
-        """
-        <div style="text-align: center; margin-top: 50px;">
-            <h1 class="neon-text" style="font-size: 3rem;">RETRO CHAT</h1>
-            <p class="cyan-text" style="font-family: 'VT323', monospace; font-size: 1.5rem;">
-                A BLAST FROM THE PAST
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+with col2:
+    st.markdown("<div style='background-color: rgba(0, 0, 0, 0.7); border: 3px solid #ff00c1; padding: 30px; margin: 20px 0; box-shadow: 0 0 15px #ff00c1;'><h2 style='color: #00fff9; text-align: center;'>CHOOSE YOUR PATH</h2></div>", unsafe_allow_html=True)
     
-    # Description
-    st.markdown(
-        """
-        <div style="text-align: center; margin: 30px 0;">
-            <p style="font-family: 'VT323', monospace; font-size: 1.2rem; color: #adff2f;">
-                Create or join a retro-styled temporary chatroom with your friends.
-                <br>No accounts, no history, just pure nostalgic vibes.
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    col_a, col_b = st.columns(2)
     
-    # Options
-    col1, col2, col3 = st.columns([1, 2, 1])
+    with col_a:
+        st.button("HOST CHATROOM")
     
-    with col2:
-        st.markdown(
-            """
-            <div style="background-color: rgba(0, 0, 0, 0.7); border: 3px solid #ff00c1; padding: 30px; margin: 20px 0; box-shadow: 0 0 15px #ff00c1;">
-                <h2 style="font-family: 'Press Start 2P', cursive; color: #00fff9; text-align: center; margin-bottom: 30px; text-shadow: 0 0 10px #00fff9;">CHOOSE YOUR PATH</h2>
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
-        
-        col_a, col_b = st.columns(2)
-        
-        with col_a:
-            if st.button("HOST CHATROOM", key="host_btn"):
-                st.session_state.page = "host"
-                st.experimental_rerun()
-        
-        with col_b:
-            if st.button("JOIN CHATROOM", key="join_btn"):
-                st.session_state.page = "join"
-                st.experimental_rerun()
-        
-        # Credits
-        st.markdown(
-            """
-            <div style="text-align: center; margin-top: 50px; font-family: 'VT323', monospace; font-size: 0.8rem; color: rgba(255,255,255,0.6);">
-                Built with Streamlit and Supabase
-            </div>
-            """, 
-            unsafe_allow_html=True
-        )
+    with col_b:
+        st.button("JOIN CHATROOM")
 
-# Run the main application
-if __name__ == "__main__":
-    main()
+# Footer
+st.markdown("""
+<div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(0,0,0,0.7); padding: 5px; text-align: center; font-size: 14px; color: #adff2f; border-top: 2px solid #ff00c1;">
+    RETRO-CHAT v1.0 | © 2025 | PRESS ESC TO EXIT
+</div>
+""", unsafe_allow_html=True)
